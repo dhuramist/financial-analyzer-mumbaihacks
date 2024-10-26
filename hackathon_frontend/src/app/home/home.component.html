@@ -1,0 +1,151 @@
+
+<main class="bg-[#F0F4F8] min-h-screen p-8 justify-center">
+  @if(!showSummary){
+  <h1
+    class="text-4xl leading-[45px] font-bold text-center mb-10 cst-color"
+  >
+    Financial Data Analyzer
+  </h1>
+}
+
+  <div
+    class="container max-w-screen-lg mx-auto flex flex-col md:flex-row gap-8 bg-white shadow-2xl rounded-lg p-8"
+  >
+    @if(!showSummary){
+
+        <div class="mx-auto flex flex-col md:flex-row gap-8">
+          <div class="flex-shrink-0 w-full md:w-1/2">
+            <img
+              src="../../assets/back.png"
+              alt="Financial Analysis"
+              class="w-full h-auto rounded-lg"
+            />
+          </div>
+  
+          <div class="w-full md:w-1/2 p-6 rounded-lg">
+            <form [formGroup]="UploadFileForm" (ngSubmit)="onFilesSubmit()">
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-6">
+                <div class="col-span-1 sm:col-span-2">
+                  <label
+                    for="company_name"
+                    class="block mb-2 text-sm font-semibold text-[#555555]"
+                  >
+                    Company Name<span>*</span>
+                  </label>
+                  <input
+                    formControlName="companyName"
+                    type="text"
+                    id="company_name"
+                    class="w-full bg-[#F9F9F9] border border-[#DDDDDD] text-[#333333] text-sm rounded-lg focus:ring-[#4A90E2] focus:border-[#4A90E2] block p-3"
+                    placeholder="e.g., Apple"
+                    [ngClass]="{
+                      'is-invalid': UploadFileForm && h.companyName.errors
+                    }"
+                    required
+                  />
+                  <div
+                    *ngIf="UploadFormsubmitted && h.companyName.errors"
+                    class="invalid-feedback"
+                  >
+                    <div *ngIf="h.companyName.errors?.['required']">
+                      Company name is required.
+                    </div>
+                  </div>
+                </div>
+    
+                <div class="col-span-1 sm:col-span-2 mt-4">
+                  <label
+                    for="file_type"
+                    class="block mb-2 text-sm font-semibold text-[#555555]"
+                  >
+                    Upload File<span>*</span>
+                  </label>
+                  <div
+                    class="flex items-center border-2 border-dashed border-[#DDDDDD] rounded-lg p-3"
+                  >
+                    <input
+                      type="file"
+                      accept=".pdf"
+                      id="file"
+                      (change)="onFileSelected($event)"
+                      [ngClass]="{
+                        'is-invalid': UploadFormsubmitted && h.file.errors
+                      }"
+                      class="w-full text-[#333333] bg-transparent border-none focus:ring-[#4A90E2] focus:border-[#4A90E2] cursor-pointer"
+                      required
+                    />
+                  </div>
+                  <div
+                    *ngIf="UploadFormsubmitted && h.file.errors"
+                    class="invalid-feedback"
+                  >
+                    <div *ngIf="h.file.errors?.['required']">File is required</div>
+                  </div>
+                  <div
+                    *ngIf="UploadFileForm.get('file')?.errors?.['fileType']"
+                    class="text-red-500 text-sm mt-2"
+                  >
+                    Please upload a valid PDF file.
+                  </div>
+                </div>
+    
+                <div class="col-span-1 sm:col-span-2 mt-8">
+                  <button
+                    type="submit"
+                    class="w-full text-white bg-cst-color font-medium rounded-lg text-sm px-5 py-3 cursor-pointer"
+                  >
+                    Submit
+                  </button>
+                </div>
+              </div>
+            </form>
+    
+            <div
+              *ngIf="summary"
+              class="mt-8 p-6 bg-[#FFFFFF] border border-[#DDDDDD] rounded-lg text-[#333333] shadow-md"
+            >
+              <h2 class="text-xl font-semibold text-[#333333] mb-4">Summary</h2>
+              <p>{{ summary }}</p>
+            </div>
+          </div>
+        </div>
+    } @else{
+
+      <div>
+        <div>
+          <div>
+            <button
+              (click)="backToHome()"
+              type="button"
+              class="fixed-width-button text-white bg-slate-700 font-medium rounded-lg text-sm px-2 py-3 cursor-pointer"
+            >
+              Go back
+            </button>
+          </div>
+        </div>
+        <div class="p-3 mt-5">
+          <h1 class="w-[1050px] text-3xl ml-6 font-bold text-[rgb(109,199,267)] text-center sticky top-0">
+            Detailed Analysis for {{companyName}}
+          </h1>
+        </div>
+        @if(showSkeleton){
+          <div class="pl-3 pr-3 mt-6 ml-6">
+          <ngx-skeleton-loader 
+          count="5" 
+          appearance="line" 
+          style="width: 100%; height: 100px; margin-bottom: 10px; margin-top:5%">
+        </ngx-skeleton-loader>
+      </div>
+      }@else{
+        <div class="pl-3 pr-3">
+          <div
+            class="text-[#333333] mb-8"
+            id="TYPEID"
+            #typingElement
+          ></div>
+        </div>
+      }
+      </div>
+    }
+  </div>
+</main>

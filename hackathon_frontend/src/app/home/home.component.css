@@ -1,0 +1,27 @@
+/* home.component.css */
+body, input, main {
+    color: #333333;
+  }
+
+  .invalid-feedback {
+    font-size: 0.875rem;
+    color: #dc3545;
+  }
+  
+  .fixed-width-button {
+    width: 100px;
+    max-width: 100%;
+  }
+
+  .fixed-width-header {
+    width: 600px; 
+    max-width: 100%; 
+  }
+
+.cst-color{
+  color:rgb(81, 131, 196);
+}
+
+.bg-cst-color{
+  background-color:rgb(81, 131, 196); ;
+}

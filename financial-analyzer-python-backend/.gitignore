@@ -1,0 +1,15 @@
+.vscode
+.env
+keys
+logs
+Articles
+env
+*.log
+__pycache__
+src
+srv
+docs
+
+
+balanceSheets
+Balance Sheets
